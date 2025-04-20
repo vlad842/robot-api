@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
+import path from 'path';
 
-const app = express();
-const port = process.env.PORT || 3000;
+const router = Router();
 
 const systemMapping = {
     navigation: "NAV-01",
@@ -25,7 +25,7 @@ function selectRandomSystem() {
 selectRandomSystem();
 
 // GET /status endpoint
-app.get('/status', (req: Request, res: Response) => {
+router.get('/status', (req: Request, res: Response) => {
     // Select a new random system for each request
     selectRandomSystem();
     res.json({
@@ -34,29 +34,20 @@ app.get('/status', (req: Request, res: Response) => {
 });
 
 // GET /repair-bay endpoint
-app.get('/repair-bay', (req: Request, res: Response) => {
+router.get('/repair-bay', (req: Request, res: Response) => {
     const systemCode = systemMapping[currentDamagedSystem];
     
-    const html = `
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title>Repair Bay</title>
-            </head>
-            <body>
-                <div class="anchor-point">${systemCode}</div>
-            </body>
-        </html>
-    `;
-    res.send(html);
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    
+    res.send(`<!DOCTYPE html><html><head><title>Repair</title></head><body><div class="anchor-point">${systemCode}</div></body></html>`);
 });
 
 // POST /teapot endpoint
-app.post('/teapot', (req: Request, res: Response) => {
+router.post('/teapot', (req: Request, res: Response) => {
     res.status(418).send("I'm a teapot");
 });
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-}); 
+export default router; 
