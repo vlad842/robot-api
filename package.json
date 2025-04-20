@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "build": "tsc",
-    "dev": "ts-node-dev --respawn src/index.ts"
+    "build": "mkdir -p dist && tsc",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
