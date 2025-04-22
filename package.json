@@ -14,8 +14,12 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^22.14.1",
+    "@types/tough-cookie": "^4.0.5",
     "axios": "^1.8.4",
+    "axios-cookie-jar": "^1.2.1",
+    "axios-cookiejar-support": "^6.0.0",
     "express": "^5.1.0",
+    "tough-cookie": "^5.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
